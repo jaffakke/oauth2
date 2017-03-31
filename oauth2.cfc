@@ -93,7 +93,7 @@ component accessors="true"
 	* @description I make the HTTP request to obtain the access token.
 	* @code The code returned from the authentication request.
 	**/
-	public struct function makeAccessTokenRequest( required string code ) {
+	public struct function makeAccessTokenRequest( required string code, struct parameters={} ) {
 		var stuResponse = {};
 		    httpService = new http(); 
 		    httpService.setMethod("post"); 
@@ -103,6 +103,11 @@ component accessors="true"
 		    httpService.addParam(type="formfield", name="client_secret", value="#getClient_secret()#");
 		    httpService.addParam(type="formfield", name="code", 		 value="#arguments.code#");
 		    httpService.addParam(type="formfield", name="redirect_uri",  value="#getRedirect_uri()#");
+		    if(structCount(arguments.parameters)) {
+		        for (key in arguments.parameters) {
+			    httpService.addParam(type="formfield", name="#lcase(key)#",  value="#trim(arguments.parameters[key])#");
+			}
+		    }
 		    result = httpService.send().getPrefix();
 		    if('200' == result.ResponseHeader['Status_Code']) {
 		    	stuResponse.success = true;
