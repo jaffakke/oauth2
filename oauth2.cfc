@@ -92,6 +92,7 @@ component accessors="true"
 	* @hint I make the HTTP request to obtain the access token.
 	* @description I make the HTTP request to obtain the access token.
 	* @code The code returned from the authentication request.
+	* @parameters A structure containing key / value pairs of data to be included in the access token request.
 	**/
 	public struct function makeAccessTokenRequest( required string code, struct parameters={} ) {
 		var stuResponse = {};
